@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/java/controller/admins/AdminAddProductController.java=UTF-8
+encoding//src/main/java/controller/admins/AdminEditProductController.java=UTF-8
+encoding//src/main/java/controller/publics/PublicCatController.java=UTF-8
+encoding//src/main/java/utils/ConnectDBUlti.java=UTF-8
+encoding//src/main/java/utils/StringUtil.java=UTF-8
+encoding//src/main/webapp/templates/admin/nav-bar.jsp=UTF-8
+encoding//src/main/webapp/templates/admin/slide-bar.jsp=UTF-8
+encoding//src/main/webapp/views/admin/user/add.jsp=UTF-8
+encoding//src/main/webapp/views/admin/view/add-product.jsp=UTF-8
+encoding//src/main/webapp/views/admin/view/list-user.jsp=UTF-8
