@@ -100,6 +100,24 @@
   	<url-pattern>/auth/login</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>LogoutController</servlet-name>
+  	<servlet-class>controller.auth.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LogoutController</servlet-name>
+  	<url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>RegisterController</servlet-name>
+  	<servlet-class>controller.auth.RegisterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RegisterController</servlet-name>
+  	<url-pattern>/regis</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- publics -->
   <servlet>

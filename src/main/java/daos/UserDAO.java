@@ -262,6 +262,29 @@ public class UserDAO {
 		return null;
 	}
 	
+	
+	public int register(User user) {
+		String Query = "INSERT INTO users(fullname, email, password) VALUES (?, ?, ?)";
+		conn = ConnectDBUlti.getConnection();
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1, user.getFullname());
+			pst.setString(2, user.getEmail());
+			pst.setString(3, user.getPassword());
+			int result = pst.executeUpdate();
+			if(result > 0) {
+				return result;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst);
+		}
+		return 0;
+	}
+	
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
 		User a = dao.getByUsernameAndPassword("taitranhuu08@gmail.com", "123456");

@@ -21,23 +21,55 @@
                 <p>With registration with us new world of fashion, fantastic discounts and much more opens to you! The whole process will not take you more than a minute!</p>
                 <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
                 <hr>
-                <form action="customer-orders.html" method="post">
+                <form id="register" action="<%=request.getContextPath() %>/regis" method="post">
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <input id="name" type="text" class="form-control">
+                    <label for="fullname">Name</label>
+                    <input id="fullname" name="fullname" type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="emaill" type="text" class="form-control">
+                    <input id="emaill" name="email" type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="passwordd" type="password" class="form-control">
+                    <input id="passwordd" name="password" type="password" class="form-control">
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
                   </div>
                 </form>
+                <script type="text/javascript">
+					$(document).ready(function () {
+						$('#register').validate({
+							rules: {
+								"fullname": {
+									required: true,
+									minlength: 10,
+								},
+								"email": {
+									required: true,
+									minlength: 5,
+								},
+								"password": {
+									required: true,
+								},
+							},
+							messages: {
+								"fullname": {
+									required: "Vui lòng nhập họ tên",
+									minlength: "Họ tên ít nhất 10 ký tự!",
+								},
+								"email": {
+									required: "Vui lòng nhập email",
+									minlength: "Email ít nhất 5 kí tự",
+								},
+								"password": {
+									required: "Vui lòng nhập mật khẩu",
+								},
+							},
+						});
+					});	
+				</script>
               </div>
             </div>
             <div class="col-lg-6">
@@ -46,7 +78,7 @@
                 <p class="lead">Already our customer?</p>
                 <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
                 <hr>
-                <form id="form" action="" method="post">
+                <form id="login2" action="" method="post">
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" name="email" type="text" class="form-control">
@@ -61,12 +93,11 @@
                 </form>
                 <script type="text/javascript">
 					$(document).ready(function () {
-						$('#form').validate({
+						$('#login2').validate({
 							rules: {
 								"email": {
 									required: true,
 									minlength: 5,
-							 		maxlength: 32,
 								},
 								"password": {
 									required: true,
@@ -74,9 +105,8 @@
 							},
 							messages: {
 								"email": {
-									required: "Vui lòng nhập tên truy cập",
-									minlength: "Tên truy cập ít nhất 5 kí tự",
-									maxlength: "Tên truy cập nhiều nhất 32 kí tự",
+									required: "Vui lòng nhập email",
+									minlength: "Email ít nhất 5 kí tự",
 								},
 								"password": {
 									required: "Vui lòng nhập mật khẩu",

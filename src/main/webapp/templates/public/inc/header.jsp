@@ -1,3 +1,4 @@
+<%@page import="models.User"%>
 <%@page import="models.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="daos.CategoryDAO"%>
@@ -32,7 +33,7 @@
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/admin/assets/js/jquery.validate.js"></script>
     
     <style type="text/css">
-		#form .form-group label.error {color:red; font-weight: bold}
+		.form-group label.error {color:red; font-weight: bold}
 	</style>
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -51,10 +52,21 @@
             <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="<%=request.getContextPath() %>/resources/public/#" class="btn btn-success btn-sm">Offer of the day</a><a href="<%=request.getContextPath() %>/resources/public/#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
             <div class="col-lg-6 text-center text-lg-right">
               <ul class="menu list-inline mb-0">
-                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/resources/public/#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/resources/public/register.jsp">Register</a></li>
-                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/resources/public/contact.jsp">Contact</a></li>
-                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/resources/public/#">Recently viewed</a></li>
+              <%
+              	User user = (User) session.getAttribute("userInfo");
+              	if(user != null) {
+              %>
+              	<li class="list-inline-item"><a href="<%=request.getContextPath() %>/purchase"><%=user.getFullname() %></a></li>
+                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/contact">Contact</a></li>
+                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/logout">Logout</a></li>
+              <%		
+              	} else {
+              %>
+              	<li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/auth/login">Register</a></li>
+              <%		
+              	}
+              %>
               </ul>
             </div>
           </div>
@@ -67,17 +79,42 @@
                 <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">Ã</span></button>
               </div>
               <div class="modal-body">
-                <form action="customer-orders.jsp" method="post">
+                <form id="login" action="<%=request.getContextPath() %>/auth/login" method="post">
                   <div class="form-group">
-                    <input id="email-modal" type="text" placeholder="email" class="form-control">
+                    <input id="email-modal" name="email" type="text" placeholder="email" class="form-control">
                   </div>
                   <div class="form-group">
-                    <input id="password-modal" type="password" placeholder="password" class="form-control">
+                    <input id="password-modal" name="password" type="password" placeholder="password" class="form-control">
                   </div>
                   <p class="text-center">
                     <button class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
                   </p>
                 </form>
+                <script type="text/javascript">
+					$(document).ready(function () {
+						$('#login').validate({
+							rules: {
+								"email": {
+									required: true,
+									minlength: 5,
+								},
+								"password": {
+									required: true,
+								},
+							},
+							messages: {
+								"email": {
+									required: "Vui lòng nhập email",
+									minlength: "Email ít nhất 5 kí tự",
+								},
+								"password": {
+									required: "Vui lòng nhập mật khẩu",
+								},
+							},
+						});
+					});	
+				</script>
+                
                 <p class="text-center text-muted">Not registered yet?</p>
                 <p class="text-center text-muted"><a href="<%=request.getContextPath() %>/resources/public/register.jsp"><strong>Register now</strong></a>! It is easy and done in 1Â minute and gives you access to special discounts and much more!</p>
               </div>

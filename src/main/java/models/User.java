@@ -31,4 +31,10 @@ public class User {
 		this.role = role;
 		this.password = password;
 	}
+
+	public User(String fullname2, String email2, String password2) {
+		this.fullname = fullname2;
+		this.email = email2;
+		this.password = password2;
+	}
 }
