@@ -1,3 +1,5 @@
+<%@page import="models.Cart"%>
+<%@page import="models.Item"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/templates/public/inc/header.jsp" %>
@@ -15,10 +17,26 @@
               </nav>
             </div>
             <div id="basket" class="col-lg-9">
+            <%
+            	Cart cart = null;
+            	Object o = session.getAttribute("cart");
+    			if (o != null) {
+    				cart = (Cart) o;
+    			} else {
+    				cart = new Cart();
+    			}
+            	User u = null;
+            	if((User) session.getAttribute("userInfo") != null) {
+            		u = (User) session.getAttribute("userInfo");
+            	}
+            	List<Item> list = cart.getItemsByUser(u);
+            	if(list != null && list.size() > 0){
+            		
+            %>
               <div class="box">
-                <form method="post" action="checkout1.html">
+                <form method="post" action="<%=request.getContextPath() %>/checkout1">
                   <h1>Shopping cart</h1>
-                  <p class="text-muted">You currently have 3 item(s) in your cart.</p>
+                  <p class="text-muted">You currently have <%=session.getAttribute("size") %> item(s) in your cart.</p>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
@@ -31,40 +49,35 @@
                         </tr>
                       </thead>
                       <tbody>
+                      <%
+                      	for(Item item : list) {
+                      %>
                         <tr>
-                          <td><a href="#"><img src="<%=request.getContextPath() %>/resources/public/img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
-                          <td><a href="#">White Blouse Armani</a></td>
+                          <td><a href="<%=request.getContextPath() %>/detail?id=<%=item.getProduct().getId()%>"><img src="<%=request.getContextPath() %>/files/<%=item.getProduct().getThumbnail() %>" alt="<%=item.getProduct().getTitle()%>"></a></td>
+                          <td><a href="<%=request.getContextPath() %>/detail?id=<%=item.getProduct().getId()%>"><%=item.getProduct().getTitle().length()>20?item.getProduct().getTitle().substring(0, 30):item.getProduct().getTitle() %></a></td>
                           <td>
-                            <input type="number" value="2" class="form-control">
+                            <input type="number" value="<%=item.getQuantity() %>" class="form-control">
                           </td>
-                          <td>$123.00</td>
+                          <td><%=item.getPrice() %></td>
                           <td>$0.00</td>
-                          <td>$246.00</td>
+                          <td><%=item.getPrice() * item.getQuantity() %></td>
                           <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
-                        <tr>
-                          <td><a href="#"><img src="<%=request.getContextPath() %>/resources/public/img/basketsquare.jpg" alt="Black Blouse Armani"></a></td>
-                          <td><a href="#">Black Blouse Armani</a></td>
-                          <td>
-                            <input type="number" value="1" class="form-control">
-                          </td>
-                          <td>$200.00</td>
-                          <td>$0.00</td>
-                          <td>$200.00</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                        </tr>
+                      <% 
+                      	}
+                      %>
                       </tbody>
                       <tfoot>
                         <tr>
                           <th colspan="5">Total</th>
-                          <th colspan="2">$446.00</th>
+                          <th colspan="2"><%=cart.TotalMoney() %></th>
                         </tr>
                       </tfoot>
                     </table>
                   </div>
                   <!-- /.table-responsive-->
                   <div class="box-footer d-flex justify-content-between flex-column flex-lg-row">
-                    <div class="left"><a href="category.html" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
+                    <div class="left"><a href="<%=request.getContextPath() %>/home" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                     <div class="right">
                       <button class="btn btn-outline-secondary"><i class="fa fa-refresh"></i> Update cart</button>
                       <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
@@ -125,6 +138,13 @@
                   <!-- /.product-->
                 </div>
               </div>
+            <%
+            	} else {
+            %>
+            	<h1>Empty</h1>
+            <%
+            	}
+            %>
             </div>
             <!-- /.col-lg-9-->
             <div class="col-lg-3">

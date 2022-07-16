@@ -53,7 +53,8 @@ public class LoginController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/admin/index");
 				return;
 			} else {
-				response.sendRedirect(request.getContextPath() + "/home");
+				response.sendRedirect(request.getContextPath() + "/buy");
+		//		response.sendRedirect(request.getContextPath() + "/home");
 				return;
 			}
 		} else {

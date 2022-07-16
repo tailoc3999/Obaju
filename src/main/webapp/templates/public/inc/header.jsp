@@ -149,7 +149,7 @@
       	}
       %>         
               <li class="nav-item dropdown menu-large">
-              	<a href="<%=request.getContextPath() %>/resources/public/#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Template<b class="caret"></b></a>
+              	<a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Template<b class="caret"></b></a>
                 <ul class="dropdown-menu megamenu">
                   <li>
                     <div class="row">
@@ -203,7 +203,7 @@
             <div class="navbar-buttons d-flex justify-content-end">
               <!-- /.nav-collapse-->
               <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
-              <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="<%=request.getContextPath() %>/resources/public/basket.jsp" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>3 items in cart</span></a></div>
+              <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="<%=request.getContextPath() %>/basket" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span><%=session.getAttribute("size")!= null?session.getAttribute("size"):"0" %> items in cart</span></a></div>
             </div>
           </div>
         </div>

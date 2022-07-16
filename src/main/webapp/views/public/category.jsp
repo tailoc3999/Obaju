@@ -65,7 +65,7 @@
                       <p class="price"> 
                         <del></del><span style='color:#4fbfa8;font-weight:bold'><%=StringUtil.FormatMoney(item.getPrice()) %></span>
                       </p>
-                      <p class="buttons"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="btn btn-outline-secondary">View detail</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                      <p class="buttons"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="btn btn-outline-secondary">View detail</a><a href="<%=request.getContextPath() %>/buy?id=<%=item.getId() %>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
                     </div>
                     <!-- /.text-->
                   </div>
