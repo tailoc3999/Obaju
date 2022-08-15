@@ -304,6 +304,40 @@ public class ProductDAO {
 		return products;
 	}
 	
+	public List<Product> getByCatId2(int id, int id_p) {
+		List<Product> products = new ArrayList<Product>();
+		conn = ConnectDBUlti.getConnection();
+		String Query = "SELECT p.*, c.* FROM products AS p "
+				+ "INNER JOIN categories AS c "
+				+ "ON p.cat_id = c.id "
+				+ "WHERE p.cat_id = ? AND p.id != ? "
+				+ "LIMIT 3";
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setInt(1, id);
+			pst.setInt(2, id_p);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				Category cat = new Category(rs.getInt("c.id"), rs.getString("c.name"));
+				String title = rs.getString("title");
+				int price = rs.getInt("price");
+				int discount = rs.getInt("discount");
+				String picture = rs.getString("picture");
+				String description = rs.getString("description");
+				Timestamp create_at = rs.getTimestamp("create_at");
+				Product product = new Product(rs.getInt("p.id"), cat, title, price, discount, picture, description, create_at);
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst, rs);
+		}
+		return products;
+	}
+	
 	public static void main(String[] args) {
 		ProductDAO dao = new ProductDAO();
 	//	int p = dao.getNumberOfProducts();

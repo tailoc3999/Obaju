@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import utils.AuthUtil;
+
 public class PublicCartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -17,8 +19,14 @@ public class PublicCartController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/views/public/basket.jsp");
-		rd.forward(request, response);
+		if(AuthUtil.CheckLogin(request, response)) {
+			RequestDispatcher rd = request.getRequestDispatcher("/views/public/basket.jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath()  + "/auth/login");
+		}
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

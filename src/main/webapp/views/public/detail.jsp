@@ -38,7 +38,7 @@
                     <h1 class="text-center"><%=product.getTitle() %></h1>
                     <p class="goToDescription"><a href="<%=request.getContextPath() %>/resources/public/#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
                     <p class="price"><span style='color:#4fbfa8'><%=StringUtil.FormatMoney(product.getPrice()) %></span></p>
-                    <p class="text-center buttons"><a href="<%=request.getContextPath() %>/resources/public/basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="<%=request.getContextPath() %>/resources/public/basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                    <p class="text-center buttons"><a href="<%=request.getContextPath() %>/buy?id=<%=product.getId() %>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="<%=request.getContextPath() %>/resources/public/basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <button class="owl-thumb-item"><img src="<%=request.getContextPath() %>/files/<%=product.getThumbnail() %>" alt="" class="img-fluid"></button>
