@@ -33,14 +33,14 @@ public class PublicCatController extends HttpServlet {
 			return;
 		}
 		
-		int numberPerPage = 3;
+		int numberPerPage = 4;
 		try {
 			numberPerPage = Integer.parseInt(request.getParameter("num"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 		if(numberPerPage < 1) {
-			numberPerPage = 3;
+			numberPerPage = 4;
 		}
 		
 		int NumberOfProducts = productDAO.getNumberOfProducts(id);
@@ -57,8 +57,23 @@ public class PublicCatController extends HttpServlet {
 		}
 		int offset = (currentPage - 1) * numberPerPage;
 
-		List<Product> products = productDAO.getPaginationByCatId(offset, id, numberPerPage);
-
+		//sort
+		String sort_by = "";
+		if(request.getParameter("sort_by") != null) {
+			sort_by = request.getParameter("sort_by");
+		}
+		
+		List<Product> products = productDAO.getPaginationByCatId(offset, id, numberPerPage, sort_by);
+		
+		//search
+		if(request.getParameter("search") != null) {
+			String search = request.getParameter("search");
+			List<Product> listSearch = productDAO.findAllByName(search);
+			NumberOfProducts = 0;
+			
+			products = listSearch;
+		}
+		
 		request.setAttribute("products", products);
 		request.setAttribute("numberofproducts", NumberOfProducts);
 		request.setAttribute("numberofpages", NumberOfPages);
@@ -84,18 +99,18 @@ public class PublicCatController extends HttpServlet {
 		
 		try {
 		//	offset = Integer.parseInt(request.getParameter("aoffset"));
-			offset = offset + 3;
+			offset = offset + 4;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 		System.out.println(offset);
 		
-		List<Product> products = productDAO.getPaginationByCatId(offset, id, 3);
+		List<Product> products = productDAO.getPaginationByCatId(offset, id, 3, "");
 		request.setAttribute("offset", offset);
 		
 		for(Product item : products) {
 			response.getWriter().print(
-				"<div class=\"col-lg-4 col-md-6\">"
+				"<div class=\"col-lg-3 col-md-4\">"
 				+ "<div class=\"product\">"
 				+ "  <div class=\"flip-container\">"
 				+ "    <div class=\"flipper\">"

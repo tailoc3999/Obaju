@@ -58,10 +58,18 @@ public class Cart {
 		}
 	}
 	
-	public int TotalMoney() {
+	public void removeItem2(List<Item> list) {
+		for(Item i : list) {
+			items.remove(i);
+		}
+	}
+	
+	public int TotalMoney(User u) {
 		int total = 0;
 		for(Item i : items) {
-			total += i.getPrice() * i.getQuantity();
+			if(i.getUser().getId() == u.getId()) {
+				total += i.getPrice() * i.getQuantity();
+			}
 		}
 		return total;
 	}

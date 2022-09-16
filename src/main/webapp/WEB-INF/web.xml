@@ -179,4 +179,59 @@
   	<url-pattern>/basket</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>PublicCheckout1Controller</servlet-name>
+  	<servlet-class>controller.publics.PublicCheckout1Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicCheckout1Controller</servlet-name>
+  	<url-pattern>/checkout1</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PublicCheckout2Controller</servlet-name>
+  	<servlet-class>controller.publics.PublicCheckout2Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicCheckout2Controller</servlet-name>
+  	<url-pattern>/checkout2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PublicCustomerOrderController</servlet-name>
+  	<servlet-class>controller.publics.PublicCustomerOrderController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicCustomerOrderController</servlet-name>
+  	<url-pattern>/purchase</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PublicOrderDetailController</servlet-name>
+  	<servlet-class>controller.publics.PublicOrderDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicOrderDetailController</servlet-name>
+  	<url-pattern>/purchase/order</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PublicCustomerAccountController</servlet-name>
+  	<servlet-class>controller.publics.PublicCustomerAccountController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicCustomerAccountController</servlet-name>
+  	<url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PublicContactController</servlet-name>
+  	<servlet-class>controller.publics.PublicContactController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PublicContactController</servlet-name>
+  	<url-pattern>/contact</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

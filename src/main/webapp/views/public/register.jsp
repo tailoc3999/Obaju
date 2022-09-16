@@ -52,6 +52,7 @@
 								},
 								"password": {
 									required: true,
+									minlength: 3,
 								},
 							},
 							messages: {
@@ -65,6 +66,7 @@
 								},
 								"password": {
 									required: "Vui lòng nhập mật khẩu",
+									minlength: "Mật khẩu ít nhất 3 ký tự",
 								},
 							},
 						});

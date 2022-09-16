@@ -285,6 +285,47 @@ public class UserDAO {
 		return 0;
 	}
 	
+	public int editInfo(User user) {
+		String Query = "UPDATE users SET fullname = ?, email = ?, phone_number = ?, address = ? WHERE id = ?";
+		conn = ConnectDBUlti.getConnection();
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1, user.getFullname());
+			pst.setString(2, user.getEmail());
+			pst.setString(3, user.getPhone_number());
+			pst.setString(4, user.getAddress());
+			pst.setInt(5, user.getId());
+			int result = pst.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst);
+		}
+		return 0;
+	}
+
+	public int editPassword(User user) {
+		String Query = "UPDATE users SET password = ? WHERE id = ?";
+		conn = ConnectDBUlti.getConnection();
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1, user.getPassword());
+			pst.setInt(2, user.getId());
+			int result = pst.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst);
+		}
+		return 0;
+	}
+
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
 		User a = dao.getByUsernameAndPassword("taitranhuu08@gmail.com", "123456");

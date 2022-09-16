@@ -135,15 +135,22 @@ public class ProductDAO {
 		return list;
 	}
 	
-	public List<Product> getPaginationByCatId(int offset, int cat_id, int numPerPage) {
+	public List<Product> getPaginationByCatId(int offset, int cat_id, int numPerPage, String sort_by) {
 		List<Product> list = new ArrayList<Product>();
 		String Query = "SELECT p.*, cat.* "
 				+ "FROM products AS p "
 				+ "INNER JOIN categories AS cat "
 				+ "ON p.cat_id = cat.id "
-				+ "WHERE p.cat_id = ? "
-				+ "ORDER BY p.id DESC "
-				+ "LIMIT ?, ? ";
+				+ "WHERE p.cat_id = ? ";
+				if(!"".equals(sort_by)) {
+					if("price".equals(sort_by)) {
+						Query += "ORDER BY p.price ASC ";
+					}
+					if("name".equals(sort_by)) {
+						Query += "ORDER BY p.title ASC ";
+					}
+				}
+				Query += "LIMIT ?, ? ";
 		conn = ConnectDBUlti.getConnection();
 		try {
 			pst = conn.prepareStatement(Query);
@@ -338,11 +345,35 @@ public class ProductDAO {
 		return products;
 	}
 	
-	public static void main(String[] args) {
-		ProductDAO dao = new ProductDAO();
-	//	int p = dao.getNumberOfProducts();
-		List<Product> p = dao.getPaginationByCatId(0, 2, 2);
-	//	Product pro = dao.getbyId(1);
-		System.out.println(p);
+	public List<Product> findAllByName(String search) {
+		List<Product> products = new ArrayList<Product>();
+		conn = ConnectDBUlti.getConnection();
+		String Query = "SELECT p.*, c.* FROM products AS p "
+				+ "INNER JOIN categories AS c "
+				+ "ON p.cat_id = c.id "
+				+ "WHERE p.title LIKE ?";
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1, "%" + search + "%");
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				Category cat = new Category(rs.getInt("c.id"), rs.getString("c.name"));
+				String title = rs.getString("title");
+				int price = rs.getInt("price");
+				int discount = rs.getInt("discount");
+				String picture = rs.getString("picture");
+				String description = rs.getString("description");
+				Timestamp create_at = rs.getTimestamp("create_at");
+				Product product = new Product(rs.getInt("p.id"), cat, title, price, discount, picture, description, create_at);
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst, rs);
+		}
+		return products;
 	}
 }

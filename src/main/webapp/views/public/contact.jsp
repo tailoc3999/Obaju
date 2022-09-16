@@ -9,32 +9,12 @@
               <!-- breadcrumb-->
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/Fashion2/home">Home</a></li>
                   <li aria-current="page" class="breadcrumb-item active">Contact</li>
                 </ol>
               </nav>
             </div>
-            <div class="col-lg-3">
-              <!--
-              *** PAGES MENU ***
-              _________________________________________________________
-              -->
-              <div class="card sidebar-menu mb-4">
-                <div class="card-header">
-                  <h3 class="h4 card-title">Pages</h3>
-                </div>
-                <div class="card-body">
-                  <ul class="nav nav-pills flex-column">
-                    <li><a href="text.html" class="nav-link">Text page</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact page</a></li>
-                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
-                  </ul>
-                </div>
-              </div>
-              <!-- *** PAGES MENU END ***-->
-              <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
-            </div>
-            <div class="col-lg-9">
+            <div class="col-lg-12">
               <div id="contact" class="box">
                 <h1>Contact</h1>
                 <p class="lead">Are you curious about something? Do you have some kind of problem with our products?</p>
@@ -56,7 +36,7 @@
                     <h3><i class="fa fa-envelope"></i> Electronic support</h3>
                     <p class="text-muted">Please feel free to write an email to us or to use our electronic ticketing system.</p>
                     <ul>
-                      <li><strong><a href="mailto:">info@fakeemail.com</a></strong></li>
+                      <li><strong><a href="mailto:">obaju@fashion.com</a></strong></li>
                       <li><strong><a href="#">Ticketio</a></strong> - our ticketing support platform</li>
                     </ul>
                   </div>
@@ -70,14 +50,8 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="firstname">Firstname</label>
+                        <label for="firstname">Name</label>
                         <input id="firstname" type="text" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="lastname">Lastname</label>
-                        <input id="lastname" type="text" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -90,6 +64,12 @@
                       <div class="form-group">
                         <label for="subject">Subject</label>
                         <input id="subject" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="phonenumber">Phone number</label>
+                        <input id="phonenumber" type="text" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">

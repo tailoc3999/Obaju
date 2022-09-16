@@ -37,4 +37,8 @@ public class User {
 		this.email = email2;
 		this.password = password2;
 	}
+	
+	public User(int id) {
+		this.id = id;
+	}
 }

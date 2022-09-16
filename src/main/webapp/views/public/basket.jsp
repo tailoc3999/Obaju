@@ -73,7 +73,7 @@
                       <tfoot>
                         <tr>
                           <th colspan="5">Total</th>
-                          <th colspan="2"><%=StringUtil.FormatMoney(cart.TotalMoney()) %></th>
+                          <th colspan="2"><%=StringUtil.FormatMoney(cart.TotalMoney(u)) %></th>
                         </tr>
                       </tfoot>
                     </table>
@@ -83,7 +83,7 @@
                     <div class="left"><a href="<%=request.getContextPath() %>/home" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                     <div class="right">
                       <button onclick="process()" class="btn btn-outline-secondary"><i class="fa fa-refresh"></i> Update cart</button>
-                      <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
+                      <button formaction="/Fashion2/checkout1" formmethod="get" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
                     </div>
                   </div>
                 </form>

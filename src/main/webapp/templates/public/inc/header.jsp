@@ -57,7 +57,6 @@
               	if(user != null) {
               %>
               	<li class="list-inline-item"><a href="<%=request.getContextPath() %>/purchase"><%=user.getFullname() %></a></li>
-                <li class="list-inline-item"><a href="<%=request.getContextPath() %>/contact">Contact</a></li>
                 <li class="list-inline-item"><a href="<%=request.getContextPath() %>/logout">Logout</a></li>
               <%		
               	} else {
@@ -67,6 +66,7 @@
               <%		
               	}
               %>
+              	<li class="list-inline-item"><a href="<%=request.getContextPath() %>/contact">Contact</a></li>
               </ul>
             </div>
           </div>
@@ -210,11 +210,12 @@
       </nav>
       <div id="search" class="collapse">
         <div class="container">
-          <form role="search" class="ml-auto">
-            <div class="input-group">
-              <input type="text" placeholder="Search" class="form-control">
+          <form action="/Fashion2/cat" method="get" role="search" class="ml-auto">
+            <div class="input-group">	
+              <input type="text" name="search" placeholder="Search" class="form-control">
+              <input type="text" hidden="hidden" name="id" value="0">
               <div class="input-group-append">
-                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
               </div>
             </div>
           </form>
