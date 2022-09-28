@@ -34,11 +34,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Dashboard</a>
+                <a class="navbar-brand" href="<%=request.getContextPath() %>/admin/index">Dashboard</a>
             </div>
         <%
-        	User user = (User) session.getAttribute("userInfo");
+        	User u = (User) session.getAttribute("userAdmin");
         %>    
-            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=user!=null?user.getFullname():"" %></b> &nbsp; <a href="<%=request.getContextPath() %>/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=u!=null?u.getFullname():"" %></b> &nbsp; <a href="<%=request.getContextPath() %>/logout?role=1" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
         </nav>
         <!-- /. NAV TOP  -->

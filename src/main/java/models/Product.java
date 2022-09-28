@@ -33,4 +33,8 @@ public class Product {
 		this.thumbnail = thumbnail;
 		this.description = description;
 	}
+	
+	public Product(int id) {
+		this.id = id;
+	}
 }

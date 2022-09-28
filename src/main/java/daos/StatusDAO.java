@@ -8,11 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Galery;
-import models.Product;
+import models.Status;
 import utils.ConnectDBUlti;
 
-public class GaleryDAO {
+public class StatusDAO {
 	private Connection conn;
 	
 	private Statement st;
@@ -21,16 +20,15 @@ public class GaleryDAO {
 	
 	private PreparedStatement pst;
 
-	public List<Galery> getByProductId(int id) {
-		List<Galery> list = new ArrayList<Galery>();
-		String Query = "SELECT * FROM `galery` WHERE product_id = ?";
+	public List<Status> getAll() {
+		List<Status> list = new ArrayList<Status>();
+		String Query = "SELECT * FROM `status` ORDER BY id ASC";
 		conn = ConnectDBUlti.getConnection();
 		try {
-			pst = conn.prepareStatement(Query);
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
+			st = conn.createStatement();
+			rs = st.executeQuery(Query);
 			while(rs.next()) {
-				Galery item = new Galery(rs.getInt("id"), new Product(id), rs.getString("picture"));
+				Status item = new Status(rs.getInt("id"), rs.getString("name"), rs.getString("class_name"));
 				list.add(item);
 			}
 		} catch (SQLException e) {
@@ -43,5 +41,6 @@ public class GaleryDAO {
 		
 		return list;
 	}
+	
 	
 }

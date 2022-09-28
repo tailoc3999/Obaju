@@ -1,4 +1,5 @@
-﻿<%@page import="models.Product"%>
+﻿<%@page import="models.Galery"%>
+<%@page import="models.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.Category"%>
 <%@page import="java.util.List"%>
@@ -56,8 +57,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="picture">Hình ảnh</label>
-                                        <input type="file" name="picture" />
-                                        <img width="200px" height="200px" src="<%=request.getContextPath() %>/files/<%=product!=null?product.getThumbnail():"" %>" alt=""/>
+                                        <div>
+                                    <%
+                                    	@SuppressWarnings("unchecked")
+                                    	List<Galery> images = (ArrayList<Galery>) request.getAttribute("images");
+                                        	if(images != null && images.size() > 0) {
+                                        		for(int i = 0; i < 3; i++) {
+                                    %>    
+                                        	<div class="img-container">
+                                        		<input type="file" name="picture" />
+                                        		<img width="200px" height="200px" src="<%=request.getContextPath() %>/files/<%=i<=images.size()-1?images.get(i).getThumbnail():"" %>" alt=""/>
+                                        	</div>
+                                    <%
+                                        		}
+                                        	}
+                                    %>    	
+                                        </div>                                     
                                     </div>
                                     <div class="form-group">
                                         <label for="price">Giá</label>

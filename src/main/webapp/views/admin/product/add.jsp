@@ -48,7 +48,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="picture">Hình ảnh</label>
-                                        <input type="file" name="picture" />
+                                        <input type="file" name="picture1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="picture">Hình ảnh</label>
+                                        <input type="file" name="picture2" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="picture">Hình ảnh</label>
+                                        <input type="file" name="picture3" />
                                     </div>
                                     <div class="form-group">
                                         <label for="price">Giá</label>
@@ -77,7 +85,9 @@
 													required: true,
 													minlength: 20,
 												},
-												
+												"picture1": {
+													required: true,
+												},
 											},
 											messages: {
 												"title": {
@@ -92,6 +102,9 @@
 												"description": {
 													required: "Vui lòng nhập mô tả sản phẩm",
 													minlength: "Mô tả ít nhất 20 ký tự",
+												},
+												"picture1": {
+													required: "Vui lòng chọn hình ảnh sản phẩm",
 												},
 											},
 										});

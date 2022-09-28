@@ -42,7 +42,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="phonenumber">Phone Number</label>
-                          <input id="phonenumber" name="phonenumber" value="<%=user!=null?user.getPhone_number():"" %>" type="text" class="form-control">
+                          <input id="phonenumber" name="phonenumber" value="<%=user.getPhone_number()!=null?user.getPhone_number():"" %>" type="text" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -57,7 +57,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="address">Address</label>
-                          <input id="address" name="address" value="<%=user!=null?user.getAddress():"" %>" type="text" class="form-control">
+                          <input id="address" name="address" value="<%=user.getAddress()!=null?user.getAddress():"" %>" type="text" class="form-control">
                         </div>
                       </div>
                     </div>

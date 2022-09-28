@@ -1,4 +1,5 @@
-﻿<%@page import="constants.DefineConstants"%>
+﻿<%@page import="utils.StringUtil"%>
+<%@page import="constants.DefineConstants"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.Product"%>
 <%@page import="java.util.List"%>
@@ -39,9 +40,9 @@
                                     <a href="<%=request.getContextPath() %>/admin/product/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
-                                    <form method="post" action="">
-                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
-                                        <input type="search" class="form-control input-sm" placeholder="Nhập tên sản phẩm" style="float:right; width: 300px;" />
+                                    <form method="get" action="">
+                                        <input type="submit" name="searchh" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
+                                        <input type="search" name="search" class="form-control input-sm" placeholder="Nhập tên sản phẩm" style="float:right; width: 300px;" />
                                         <div style="clear:both"></div>
                                     </form><br />
                                 </div>
@@ -74,7 +75,7 @@
                                         </td>
                                         <td class="center"><%=item.getTitle() %></td>
                                         <td class="center"><%=item.getCat().getName() %></td>	
-                                        <td class="center"><%=item.getPrice() %>đ</td>
+                                        <td class="center"><%=StringUtil.FormatMoney(item.getPrice()) %></td>
                                         <td class="center"><%=item.getDescription().length()<200?item.getDescription():item.getDescription().substring(0, 200) %> ...</td>
                                         <td class="center">
                                             <a href="<%=request.getContextPath() %>/admin/product/edit?id=<%=item.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>

@@ -1740,6 +1740,7 @@ input[type="date"] {
 }
 .form-group {
   margin-bottom: 15px;
+  clear: both;
 }
 .radio,
 .checkbox {
@@ -2082,8 +2083,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #fff;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #4fbfa8;
+  border-color: #4fbfa8;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -4177,8 +4178,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   z-index: 2;
   color: #fff;
   cursor: default;
-  background-color: #428bca;
-  border-color: #428bca;
+  background-color: #4fbfa8;
+  border-color: #4fbfa8;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,

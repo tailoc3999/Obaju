@@ -42,6 +42,14 @@ public class AdminIndexUserController extends HttpServlet {
 		int offset = (currentPage - 1) * DefineConstants.NUMBER_PER_PAGE_USER;
 		
 		List<User> users = userDAO.getPagination(offset);
+		
+		// search
+		if(request.getParameter("search") != null) {
+			String search = request.getParameter("search");
+			List<User> searchList = userDAO.getSearchList(search);
+			users = searchList;
+		}
+		
 		request.setAttribute("users", users);
 		request.setAttribute("numberOfUsers", numberOfUsers);
 		request.setAttribute("numberOfPages", numberOfPages);

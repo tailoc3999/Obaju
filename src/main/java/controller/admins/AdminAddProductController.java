@@ -2,6 +2,8 @@ package controller.admins;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -57,27 +59,38 @@ public class AdminAddProductController extends HttpServlet {
 			e.printStackTrace();
 		}
 		String description = request.getParameter("description");
+		
+		// process image
+		List<String> filesName = new ArrayList<String>();
+		try {
+			Collection<Part> parts = request.getParts();
+			for(Part filePart : parts) {
+				String fileName2 = filePart.getSubmittedFileName();
+				if (fileName2 != null) {
+					String rootPath = request.getServletContext().getRealPath("");
+					String dirUploadPath = rootPath + "files";
+					File createDir = new File(dirUploadPath);
 
-		Part filePart = request.getPart("picture");
-		String fileName = filePart.getSubmittedFileName();
-		if (!"".equals(fileName)) {
-			String rootPath = request.getServletContext().getRealPath("");
-			String dirUploadPath = rootPath + "files";
-			File createDir = new File(dirUploadPath);
-
-			if (!createDir.exists()) {
-				createDir.mkdir();
+					if (!createDir.exists()) {
+						createDir.mkdir();
+					}
+				//	string, string builder
+					StringBuilder sb = new StringBuilder();
+					String filePath = sb.append(dirUploadPath).append(File.separator).append(fileName2).toString();
+					filePart.write(filePath); // Truyá»�n vÃ o Ä‘Æ°á»�ng dáº«n upload file
+				//	System.out.println("dirUploadPath :" + dirUploadPath + filePath);
+					filesName.add(fileName2);
+				}
 			}
-			// string, string builder
-			StringBuilder sb = new StringBuilder();
-			String filePath = sb.append(dirUploadPath).append(File.separator).append(fileName).toString();
-			filePart.write(filePath); // Truyá»�n vÃ o Ä‘Æ°á»�ng dáº«n upload file
-			System.out.println("dirUploadPath :" + dirUploadPath);
+		} catch (Exception e) {
+			System.out.println("error");
+			e.printStackTrace();
 		}
 
-		Product product = new Product(cat_id, title, price, fileName, description);
+		// add
+		Product product = new Product(cat_id, title, price, filesName.get(0), description);
 
-		if (productDAO.add(product) > 0) {
+		if (productDAO.add(product, filesName) > 0) {
 			// success
 			response.sendRedirect(request.getContextPath() + "/admin/product/index?msg=1");
 			return;

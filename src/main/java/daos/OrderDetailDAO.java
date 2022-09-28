@@ -28,10 +28,11 @@ public class OrderDetailDAO {
 
 	public List<OrderDetail> getOrderDetailById(int oid) {
 		List<OrderDetail> list = new ArrayList<OrderDetail>();
-		String Query = "SELECT od.*, o.*, p.*, s.* FROM `order_detail` AS od "
+		String Query = "SELECT od.*, o.*, p.*, s.*, u.* FROM `order_detail` AS od "
 				+ "INNER JOIN `order` AS o ON od.order_id = o.id "
 				+ "INNER JOIN `products` AS p ON od.product_id = p.id "
 				+ "INNER JOIN status AS s ON s.id = o.status "
+				+ "INNER JOIN users AS u ON u.id = o.user_id "
 				+ "WHERE od.order_id = ?";
 		conn = ConnectDBUlti.getConnection();
 		try {
@@ -46,6 +47,10 @@ public class OrderDetailDAO {
 				int total_money = rs.getInt("od.total_money");
 				// get o
 				int user_id = rs.getInt("o.user_id");
+				String uname = rs.getString("u.fullname");
+				String uemail = rs.getString("u.email");
+				String uphone_number = rs.getString("u.phone_number");
+				String uaddress = rs.getString("u.address");
 				String fullname = rs.getString("o.fullname");
 				String email = rs.getString("o.email");
 				String phone_number = rs.getString("o.phone_number");
@@ -66,7 +71,7 @@ public class OrderDetailDAO {
 				Timestamp create_at = rs.getTimestamp("p.create_at");
 				
 				Product product = new Product(product_id, new Category(cat_id), title, price, 0, picture, description, create_at);
-				Order order = new Order(oid, new User(user_id), fullname, email, phone_number, address, note, order_date, new Status(status, name, class_name), code, totalMoney);
+				Order order = new Order(oid, new User(user_id, uname, uemail, uphone_number, uaddress, null, null), fullname, email, phone_number, address, note, order_date, new Status(status, name, class_name), code, totalMoney);
 				OrderDetail orderDetail = new OrderDetail(id, order, product, price, num, total_money);
 				list.add(orderDetail);
 			}

@@ -12,4 +12,12 @@ public class AuthUtil {
 		}
 		return true;
 	}
+	
+	public static boolean CheckLoginAdmin(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userAdmin") == null) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -39,7 +39,7 @@
                   	String sort_by = request.getParameter("sort_by");
                   %>
                     <form  class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
-                      <div class="products-number"><strong>Show</strong><a href="<%=request.getContextPath() %>/cat?num=3&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">3</a><a href="<%=request.getContextPath() %>/cat?num=6&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">6</a><a href="<%=request.getContextPath() %>/cat?num=<%=NumberOfProducts!=0?NumberOfProducts:"" %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div>
+                      <div class="products-number"><strong>Show</strong><a href="<%=request.getContextPath() %>/cat?num=4&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">4</a><a href="<%=request.getContextPath() %>/cat?num=8&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">8</a><a href="<%=request.getContextPath() %>/cat?num=<%=NumberOfProducts!=0?NumberOfProducts:"" %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div>
                       <div class="products-sort-by mt-2 mt-lg-0"><strong>Sort by</strong>
                         <select id="sort-by" name="sort-by" class="form-control">
                           <option value="<%=request.getContextPath() %>/cat?id=<%=cat_id %>">-Change</option>
@@ -66,22 +66,22 @@
               <%
               	if(products != null && products.size() > 0) {
               		for(Product item : products) {
-              			
+              		String urlSlug = request.getContextPath() + "/detail/" + StringUtil.makeSlug(item.getCat().getName()) + "/" + StringUtil.makeSlug(item.getTitle()) + "-" + item.getId() + ".html";
               %>
                 <div class="col-lg-3 col-md-4">
                   <div class="product">
                     <div class="flip-container">
                       <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
+                        <div class="front"><a href="<%=urlSlug %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="<%=urlSlug %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
                       </div>
-                    </div><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a>
+                    </div><a href="<%=urlSlug %>" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a>
                     <div class="text">
-                      <h3><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>"><%=item.getTitle() %></a></h3>
+                      <h3><a href="<%=urlSlug %>"><%=item.getTitle() %></a></h3>
                       <p class="price"> 
                         <del></del><span style='color:#4fbfa8;font-weight:bold'><%=StringUtil.FormatMoney(item.getPrice()) %></span>
                       </p>
-                      <p class="buttons"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="btn btn-outline-secondary">View detail</a><a href="<%=request.getContextPath() %>/buy?id=<%=item.getId() %>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                      <p class="buttons"><a href="<%=urlSlug %>" class="btn btn-outline-secondary">View detail</a><a href="<%=request.getContextPath() %>/buy?id=<%=item.getId() %>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
                     </div>
                     <!-- /.text-->
                   </div>
@@ -105,7 +105,7 @@
               <%
               	if(currentpage > 1) {
               %>
-              		<li class="page-item"><a href="<%=request.getContextPath() %>/cat?page=<%=currentpage - 1 %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" aria-label="Previous" class="page-link"><span aria-hidden="true">Â«</span><span class="sr-only">Previous</span></a></li>
+              		<li class="page-item"><a href="<%=request.getContextPath() %>/cat?page=<%=currentpage - 1 %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>&sort_by=<%=sort_by %>" aria-label="Previous" class="page-link"><span aria-hidden="true">Â«</span><span class="sr-only">Previous</span></a></li>
               <%		
               	}
               	for(int i = 1; i <= NumberOfPages; i++) {
@@ -116,7 +116,7 @@
               <%	
               		} else {
               %>
-                	<li class="page-item"><a href="<%=request.getContextPath() %>/cat?page=<%=i %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>" class="page-link"><%=i %></a></li>
+                	<li class="page-item"><a href="<%=request.getContextPath() %>/cat?page=<%=i %>&id=<%=products.size()>0?products.get(0).getCat().getId():"" %>&sort_by=<%=sort_by %>" class="page-link"><%=i %></a></li>
               <%		}
               	}
               	
@@ -166,7 +166,7 @@
     		var offset = <%= (int) request.getAttribute("offset")%>;
     		
     		$.ajax({
-    			url: '<%=request.getContextPath() %>/cat?id=<%=products.size()>0?products.get(0).getCat().getId():""  %>',
+    			url: '<%=request.getContextPath() %>/cat?id=<%=products.size()>0?products.get(0).getCat().getId():""  %>&sort_by=<%=sort_by %>',
     			type: 'POST',
     			cache: false,
     			data: {

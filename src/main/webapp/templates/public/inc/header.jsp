@@ -1,3 +1,4 @@
+<%@page import="utils.StringUtil"%>
 <%@page import="models.User"%>
 <%@page import="models.Category"%>
 <%@page import="java.util.List"%>
@@ -49,8 +50,7 @@
       <div id="top">
         <div class="container">
           <div class="row">
-            <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="<%=request.getContextPath() %>/resources/public/#" class="btn btn-success btn-sm">Offer of the day</a><a href="<%=request.getContextPath() %>/resources/public/#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
-            <div class="col-lg-6 text-center text-lg-right">
+            <div class="col-lg-12 text-center text-lg-right">
               <ul class="menu list-inline mb-0">
               <%
               	User user = (User) session.getAttribute("userInfo");
@@ -139,66 +139,16 @@
       	List<Category> catList = cattegoryDAO.getAll();
       	if(catList != null && catList.size() > 0) {
       		for(Category item : catList) {
+      			String urlSlug = request.getContextPath() + "/category/" + StringUtil.makeSlug(item.getName()) + "-" + item.getId() + ".html";
       %>			
             
               <li class="nav-item dropdown menu-large">
-              	<a id="<%=item.getName() %>" href="<%=request.getContextPath() %>/cat?id=<%=item.getId() %>" class=" nav-link"><%=item.getName() %><b class="caret"></b></a>
+              	<a id="<%=item.getName() %>" href="<%=urlSlug %>" class=" nav-link"><%=item.getName() %><b class="caret"></b></a>
               </li>
       <%
        		}
       	}
       %>         
-              <li class="nav-item dropdown menu-large">
-              	<a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Template<b class="caret"></b></a>
-                <ul class="dropdown-menu megamenu">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Shop</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/index.jsp" class="nav-link">Homepage</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/category.jsp" class="nav-link">Category - sidebar left</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/category-right.jsp" class="nav-link">Category - sidebar right</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/category-full.jsp" class="nav-link">Category - full width</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/detail.jsp" class="nav-link">Product detail</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>User</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/register.jsp" class="nav-link">Register / login</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/customer-orders.jsp" class="nav-link">Orders history</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/customer-order.jsp" class="nav-link">Order history detail</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/customer-wishlist.jsp" class="nav-link">Wishlist</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/customer-account.jsp" class="nav-link">Customer account / change password</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Order process</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/basket.jsp" class="nav-link">Shopping cart</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/checkout1.jsp" class="nav-link">Checkout - step 1</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/checkout2.jsp" class="nav-link">Checkout - step 2</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/checkout3.jsp" class="nav-link">Checkout - step 3</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/checkout4.jsp" class="nav-link">Checkout - step 4</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Pages and blog</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/blog.jsp" class="nav-link">Blog listing</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/post.jsp" class="nav-link">Blog Post</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/faq.jsp" class="nav-link">FAQ</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/text.jsp" class="nav-link">Text page</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/text-right.jsp" class="nav-link">Text page - right sidebar</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/404.jsp" class="nav-link">404 page</a></li>
-                          <li class="nav-item"><a href="<%=request.getContextPath() %>/resources/public/contact.jsp" class="nav-link">Contact</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
             </ul>
             <div class="navbar-buttons d-flex justify-content-end">
               <!-- /.nav-collapse-->

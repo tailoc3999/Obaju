@@ -1,3 +1,5 @@
+<%@page import="models.Galery"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="utils.StringUtil"%>
 <%@page import="models.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -20,20 +22,28 @@
                 </ol>
               </nav>
             </div>
-            <%@ include file="/templates/public/inc/leftbar.jsp" %>
-            <div class="col-lg-9 order-1 order-lg-2">
-            
+            <div class="col-lg-12 order-1 order-lg-2">
               <div id="productMain" class="row">
-                <div class="col-md-6">
+            <%
+            	@SuppressWarnings("unchecked")
+            	List<Galery> images = (ArrayList<Galery>) request.getAttribute("images");
+            	if(images != null && images.size() > 0) {
+            
+            %>  
+                <div class="col-md-4">
                   <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
-                    <div class="item"> <img src="<%=request.getContextPath() %>/files/<%=product.getThumbnail() %>" alt="" class="img-fluid"></div>
-                    <div class="item"> <img src="<%=request.getContextPath() %>/resources/public/img/detailbig2.jpg" alt="" class="img-fluid"></div>
-                    <div class="item"> <img src="<%=request.getContextPath() %>/resources/public/img/detailbig3.jpg" alt="" class="img-fluid"></div>
+                <%
+                	for(Galery item : images) {
+                %>  
+                    <div class="item"> <img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></div>
+                <%
+                	}
+                %>
                   </div>
                   <!-- /.ribbon-->
                   <!-- /.ribbon-->
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                   <div class="box">
                     <h1 class="text-center"><%=product.getTitle() %></h1>
                     <p class="goToDescription"><a href="<%=request.getContextPath() %>/resources/public/#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
@@ -41,11 +51,18 @@
                     <p class="text-center buttons"><a href="<%=request.getContextPath() %>/buy?id=<%=product.getId() %>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="<%=request.getContextPath() %>/resources/public/basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
-                    <button class="owl-thumb-item"><img src="<%=request.getContextPath() %>/files/<%=product.getThumbnail() %>" alt="" class="img-fluid"></button>
-                    <button class="owl-thumb-item"><img src="<%=request.getContextPath() %>/resources/public/img/detailsquare2.jpg" alt="" class="img-fluid"></button>
-                    <button class="owl-thumb-item"><img src="<%=request.getContextPath() %>/resources/public/img/detailsquare3.jpg" alt="" class="img-fluid"></button>
+                <%
+                	for(Galery galery : images) {
+                %>  
+                    <button class="owl-thumb-item"><img src="<%=request.getContextPath() %>/files/<%=galery.getThumbnail() %>" alt="" class="img-fluid"></button>
+                <%
+                	}
+                %>
                   </div>
                 </div>
+            <%
+            	}
+            %>    
               </div>
               <div id="details" class="box">
                 <p><%=product.getDescription() %></p>
@@ -62,103 +79,32 @@
                     <h3>You may also like these products</h3>
                   </div>
                 </div>
+              <%
+              	@SuppressWarnings("unchecked")
+              	List<Product> recentList = (ArrayList<Product>) request.getAttribute("recentlist");
+              	if(recentList != null && recentList.size() > 0){
+              		for(Product item : recentList) {
+              			String urlSlug = request.getContextPath() + "/detail/" + StringUtil.makeSlug(item.getCat().getName()) + "/" + StringUtil.makeSlug(item.getTitle()) + "-" + item.getId() + ".html";
+              %>  
                 <div class="col-md-3 col-sm-6">
                   <div class="product same-height">
                     <div class="flip-container">
                       <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product2.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product2_2.jpg" alt="" class="img-fluid"></a></div>
+                        <div class="front"><a href="<%=urlSlug %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="<%=urlSlug %>"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a></div>
                       </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product2.jpg" alt="" class="img-fluid"></a>
+                    </div><a href="<%=urlSlug %>" class="invisible"><img src="<%=request.getContextPath() %>/files/<%=item.getThumbnail() %>" alt="" class="img-fluid"></a>
                     <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$124</p>
+                      <h3><%=item.getTitle() %></h3>
+                      <p class="price" style='color:#4fbfa8;font-weight:bold'><%=StringUtil.FormatMoney(item.getPrice()) %></p>
                     </div>
                   </div>
                   <!-- /.product-->
                 </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="product same-height">
-                    <div class="flip-container">
-                      <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product1_2.jpg" alt="" class="img-fluid"></a></div>
-                      </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a>
-                    <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                  <!-- /.product-->
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="product same-height">
-                    <div class="flip-container">
-                      <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product3.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product3_2.jpg" alt="" class="img-fluid"></a></div>
-                      </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product3.jpg" alt="" class="img-fluid"></a>
-                    <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                  <!-- /.product-->
-                </div>
-              </div>
-              <div class="row same-height-row">
-                <div class="col-md-3 col-sm-6">
-                  <div class="box same-height">
-                    <h3>Products viewed recently</h3>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="product same-height">
-                    <div class="flip-container">
-                      <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product2.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product2_2.jpg" alt="" class="img-fluid"></a></div>
-                      </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product2.jpg" alt="" class="img-fluid"></a>
-                    <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                  <!-- /.product-->
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="product same-height">
-                    <div class="flip-container">
-                      <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product1_2.jpg" alt="" class="img-fluid"></a></div>
-                      </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product1.jpg" alt="" class="img-fluid"></a>
-                    <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                  <!-- /.product-->
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="product same-height">
-                    <div class="flip-container">
-                      <div class="flipper">
-                        <div class="front"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product3.jpg" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="<%=request.getContextPath() %>/resources/public/detail.html"><img src="<%=request.getContextPath() %>/resources/public/img/product3_2.jpg" alt="" class="img-fluid"></a></div>
-                      </div>
-                    </div><a href="<%=request.getContextPath() %>/resources/public/detail.html" class="invisible"><img src="<%=request.getContextPath() %>/resources/public/img/product3.jpg" alt="" class="img-fluid"></a>
-                    <div class="text">
-                      <h3>Fur coat</h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                  <!-- /.product-->
-                </div>
+              <%
+              		}
+              	}
+              %>  
               </div>
             </div>
             <!-- /.col-md-9-->

@@ -12,14 +12,19 @@
         <!-- /. ROW  -->
         <hr />
         <div class="row">
+        <%
+        	int numberOfProducts = (int) request.getAttribute("numberofproducts");
+        	int numberOfUsers = (int) request.getAttribute("numberofusers");
+        	int numberOfOrders = (int) request.getAttribute("numberoforders");
+        %>
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <div class="panel panel-back noti-box">
                     <span class="icon-box bg-color-green set-icon">
                     <i class="fa fa-bars"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý danh mục</a></p>
-                        <p class="text-muted">Có 5 danh mục</p>
+                        <p class="main-text"><a href="<%=request.getContextPath() %>/admin/product/index" title="">Quản lý sản phẩm</a></p>
+                        <p class="text-muted">Có <%=numberOfProducts %> sản phẩm</p>
                     </div>
                 </div>
             </div>
@@ -29,8 +34,8 @@
                     <i class="fa fa-bell-o"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý bài hát</a></p>
-                        <p class="text-muted">Có 10 bài hát</p>
+                        <p class="main-text"><a href="<%=request.getContextPath() %>/admin/order/index" title="">Quản lý đơn hàng</a></p>
+                        <p class="text-muted">Có <%=numberOfOrders %> đơn hàng</p>
                     </div>
                 </div>
             </div>
@@ -40,8 +45,8 @@
                     <i class="fa fa-rocket"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý người dùng</a></p>
-                        <p class="text-muted">Có 15 người dùng</p>
+                        <p class="main-text"><a href="<%=request.getContextPath() %>/admin/user/index" title="">Quản lý người dùng</a></p>
+                        <p class="text-muted">Có <%=numberOfUsers %> người dùng</p>
                     </div>
                 </div>
             </div>

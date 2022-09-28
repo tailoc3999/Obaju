@@ -39,6 +39,13 @@ public class AdminIndexProductController extends HttpServlet {
 		int offset = (currentPage - 1) * DefineConstants.NUMBER_PER_PAGE_PRODUCT;
 
 		List<Product> products = productDAO.getPagination(offset);
+		
+		// search
+		if(request.getParameter("search") != null) {
+			String search = request.getParameter("search");
+			List<Product> searchList = productDAO.getSearchList(search);
+			products = searchList;
+		}
 
 		request.setAttribute("products", products);
 		request.setAttribute("numberofproducts", NumberOfProducts);

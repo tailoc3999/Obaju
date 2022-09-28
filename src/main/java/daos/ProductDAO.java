@@ -11,6 +11,7 @@ import java.util.List;
 
 import constants.DefineConstants;
 import models.Category;
+import models.Galery;
 import models.Product;
 import utils.ConnectDBUlti;
 
@@ -181,7 +182,8 @@ public class ProductDAO {
 		return list;
 	}
 	
-	public int add(Product pro) {
+	public int add(Product pro, List<String> filesName) {
+		int result = 0;
 		String Query = "INSERT INTO `products`(cat_id, title, price, picture, description) VALUES (?, ?, ?, ?, ?)";
 		conn = ConnectDBUlti.getConnection();
 		try {
@@ -191,9 +193,25 @@ public class ProductDAO {
 			pst.setInt(3, pro.getPrice());
 			pst.setString(4, pro.getThumbnail());
 			pst.setString(5, pro.getDescription());
-			int result = pst.executeUpdate();
-			if(result > 0 ) {
-				return result;
+			pst.executeUpdate();
+			// get product_id
+			String Query2 = "SELECT id FROM `products` order BY id DESC";
+			st = conn.createStatement();
+			rs = st.executeQuery(Query2);
+			if(rs.next()) {
+				// add galery
+				for(String fileName : filesName) {
+					String Query3 = "INSERT INTO `galery`(`product_id`, `picture`) VALUES (?, ?)";
+					PreparedStatement pst2 = conn.prepareStatement(Query3);
+					pst2.setInt(1, rs.getInt("id"));
+					pst2.setString(2, fileName);
+					result = pst2.executeUpdate();
+				}
+				
+				if(result > 0 ) {
+					return result;
+			}
+			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,6 +219,7 @@ public class ProductDAO {
 			e.printStackTrace();
 		} finally {
 			ConnectDBUlti.close(conn, pst);
+			ConnectDBUlti.close(conn, pst, rs);
 		}
 		return 0;
 	}
@@ -231,12 +250,13 @@ public class ProductDAO {
 		return null;
 	}
 	
-	public int edit(Product product) {
+	public int edit(Product product, List<Galery> galery) {
 		conn = ConnectDBUlti.getConnection();
 		String Query  = "UPDATE products SET "
 				+ "cat_id = ?, title = ?, price = ?, picture = ?, description = ? "
 				+ "WHERE id = ?";
 		try {
+			// update product
 			pst = conn.prepareStatement(Query);
 			pst.setInt(1, product.getCat().getId());
 			pst.setString(2, product.getTitle());
@@ -245,9 +265,28 @@ public class ProductDAO {
 			pst.setString(5, product.getDescription());
 			pst.setInt(6, product.getId());
 			int result = pst.executeUpdate();
-			if(result > 0) {
-				return result;
+			// update galery
+			for(Galery item: galery) {
+				if(!item.getThumbnail().isEmpty()) {
+					if(item.getId() != 0) {
+						//edit
+						String Query2 = "UPDATE `galery` SET `picture`= ? WHERE id = ?";
+						PreparedStatement pst2 = conn.prepareStatement(Query2);
+						pst2.setString(1, item.getThumbnail());
+						pst2.setInt(2, item.getId());
+						result = pst2.executeUpdate();
+					} else {
+						//add
+						String Query2 = "INSERT INTO `galery`(`product_id`, `picture`) VALUES (?, ?)";
+						PreparedStatement pst2 = conn.prepareStatement(Query2);
+						pst2.setInt(1, item.getProduct().getId());
+						pst2.setString(2, item.getThumbnail());
+						result = pst2.executeUpdate();
+					}
+				}
+				
 			}
+			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -259,9 +298,15 @@ public class ProductDAO {
 	}
 	
 	public int del(int id) {
-		String Query = "DELETE FROM products WHERE id = ?";
 		conn = ConnectDBUlti.getConnection();
 		try {
+			String Query2 = "DELETE FROM `galery` WHERE product_id = ?";
+			PreparedStatement pst2 = conn.prepareStatement(Query2);
+			pst2.setInt(1, id);
+			pst2.executeUpdate();
+			
+			String Query = "DELETE FROM products WHERE id = ?";
+			
 			pst = conn.prepareStatement(Query);
 			pst.setInt(1, id);
 			int result = pst.executeUpdate();
@@ -375,5 +420,41 @@ public class ProductDAO {
 			ConnectDBUlti.close(conn, pst, rs);
 		}
 		return products;
+	}
+
+	public List<Product> getSearchList(String search) {
+		List<Product> list = new ArrayList<Product>();
+		String Query = "SELECT p.*, cat.* "
+				+ "FROM products AS p "
+				+ "INNER JOIN categories AS cat "
+				+ "ON p.cat_id = cat.id "
+				+ "WHERE p.title LIKE ? "
+				+ "ORDER BY p.id DESC ";
+		conn = ConnectDBUlti.getConnection();
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1,"%" + search + "%");
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				Category cat = new Category(rs.getInt("cat.id"), rs.getString("cat.name"));
+				String title = rs.getString("p.title");
+				int price = rs.getInt("p.price");
+				int discount = rs.getInt("p.discount");
+				String picture = rs.getString("p.picture");
+				String description = rs.getString("p.description");
+				Timestamp create_at = rs.getTimestamp("p.create_at");
+				Product item = new Product(id, cat, title, price, discount, picture, description, create_at);
+				list.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, st, rs);
+		}
+
+		return list;
 	}
 }

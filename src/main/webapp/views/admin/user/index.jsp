@@ -16,6 +16,7 @@
         <!-- /. ROW  -->
         <hr />
         <%
+        	User user = (User) session.getAttribute("userAdmin");
         	String msg = request.getParameter("msg");
         	if("1".equals(msg)) {
         		out.print("<span style='color:green; font-weight:bold'>Thêm người dùng thành công!!</span>");
@@ -46,9 +47,9 @@
                                     <a href="<%=request.getContextPath() %>/admin/user/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
-                                    <form method="post" action="">
-                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
-                                        <input type="search" class="form-control input-sm" placeholder="Nhập tên người dùng" style="float:right; width: 300px;" />
+                                    <form method="get" action="">
+                                        <input type="submit" name="searchh" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
+                                        <input type="search" name="search" class="form-control input-sm" placeholder="Nhập tên người dùng" style="float:right; width: 300px;" />
                                         <div style="clear:both"></div>
                                     </form><br />
                                 </div>
@@ -82,8 +83,18 @@
                                         <td class="center"><%=item.getAddress() %></td>
                                         <td><%=item.getRole().getName() %></td>
                                         <td class="center">
-                                            <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=item.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                    <%
+                                    	if("admin".equals(user.getEmail())) {
+                                    %>
+                                     		<a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=item.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
                                             <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=item.getId() %>" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                    <%		
+                                    	} else if(item.getId() == user.getId()) {
+                                    %>
+                                    		<a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=item.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                    <%		
+                                    	}
+                                    %>    
                                         </td>
                                     </tr>
                                 <% 		}

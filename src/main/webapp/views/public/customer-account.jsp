@@ -139,13 +139,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="phonenumber">Phone number</label>
-                        <input id="phonenumber" value="<%=userLogin.getPhone_number() %>" name="phonenumber" type="text" class="form-control">
+                        <input id="phonenumber" value="<%=userLogin.getPhone_number()!=null?userLogin.getPhone_number():"" %>" name="phonenumber" type="text" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="address">Address</label>
-                        <input id="address" name="address" value="<%=userLogin.getAddress() %>" type="text" class="form-control">
+                        <input id="address" name="address" value="<%=userLogin.getAddress()!=null?userLogin.getAddress():"" %>" type="text" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">

@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class StringUtil {
@@ -73,4 +74,19 @@ public class StringUtil {
 	    return str1;
 	}
 	
+	public static String OrderCode(int numberOfCharactor) {
+		String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
+		String alphaUpperCase = alpha.toUpperCase(); // A-Z
+		String digits = "0123456789"; // 0-9
+		String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
+		Random generator = new Random();
+		
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < numberOfCharactor; i++) {
+			int number = generator.nextInt(ALPHA_NUMERIC.length() - 1);
+			char ch = ALPHA_NUMERIC.charAt(number);
+			sb.append(ch);
+		}
+		return sb.toString();
+	}
 }

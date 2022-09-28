@@ -13,4 +13,9 @@ public class Galery {
 	private Product product;
 	
 	private String thumbnail;
+	
+	public Galery (Product p, String thumbnail) {
+		this.thumbnail = thumbnail;
+		this.product = p;
+	}
 }

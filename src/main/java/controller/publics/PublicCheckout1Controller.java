@@ -1,6 +1,8 @@
 package controller.publics;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import models.Cart;
 import models.Order;
 import models.User;
 import utils.AuthUtil;
+import utils.StringUtil;
 
 public class PublicCheckout1Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -55,9 +58,8 @@ public class PublicCheckout1Controller extends HttpServlet {
 		String phoneNumber = request.getParameter("phonenumber");
 		String note = request.getParameter("note");
 		String address = request.getParameter("address");
-		String code =  "" + java.time.LocalDateTime.now().getYear() + java.time.LocalDateTime.now().getMonthValue()
-				+ java.time.LocalDateTime.now().getDayOfMonth() + java.time.LocalDateTime.now().getHour()
-				+ java.time.LocalDateTime.now().getMinute() + java.time.LocalDateTime.now().getSecond();
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
+		String code = sdf.format(new Date()) + StringUtil.OrderCode(8);
 		
 		int totalMoney = cart.TotalMoney(u);
 		

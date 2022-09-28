@@ -43,7 +43,7 @@ public class RegisterController extends HttpServlet {
 		if(userDAO.register(user) > 0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userInfo", user);
-			response.sendRedirect(request.getContextPath() + "/purchase");
+			response.sendRedirect(request.getContextPath() + "/profile");
 			return;
 		} else {
 			response.sendRedirect(request.getContextPath() + "/auth/login?err=1");

@@ -80,6 +80,12 @@
                 <p class="lead">Already our customer?</p>
                 <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
                 <hr>
+                <%
+                	String err = request.getParameter("err");
+                	if("1".equals(err)) {
+                		out.print("<span style='color:red; font-weight:bold'>The email or password that you've entered is incorrect.</span>");
+                	}
+                %>
                 <form id="login2" action="" method="post">
                   <div class="form-group">
                     <label for="email">Email</label>

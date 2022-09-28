@@ -18,6 +18,20 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		// admin
+		int role = 0;
+		try {
+			role = Integer.parseInt(request.getParameter("role"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		if(role == 1) {
+			session.removeAttribute("userAdmin");
+			response.sendRedirect(request.getContextPath() + "/home");
+			return;
+		}
+		
+		// client
 		session.removeAttribute("userInfo");
 		session.removeAttribute("size");
 		

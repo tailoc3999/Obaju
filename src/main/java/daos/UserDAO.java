@@ -326,9 +326,44 @@ public class UserDAO {
 		return 0;
 	}
 
+	public List<User> getSearchList(String search) {
+		List<User> users = new ArrayList<User>();
+		conn = ConnectDBUlti.getConnection();
+		String Query = "SELECT u.*, r.* "
+				+ "FROM users AS u "
+				+ "INNER JOIN role AS r "
+				+ "ON u.role_id = r.id "
+				+ "WHERE u.fullname LIKE ? "
+				+ "ORDER BY u.id DESC ";
+		try {
+			pst = conn.prepareStatement(Query);
+			pst.setString(1, "%" + search + "%");
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("u.id");
+				String fullname = rs.getString("fullname");
+				String email = rs.getString("email");
+				String phone_number = rs.getString("phone_number");
+				String address = rs.getString("address");
+				String password = rs.getString("password");
+				Role role = new Role(rs.getInt("r.id"), rs.getString("name"));
+				User user = new User(id, fullname, email, phone_number, address, password, role);
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDBUlti.close(conn, pst, rs);
+		}
+
+		return users;
+	}
+	
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
-		User a = dao.getByUsernameAndPassword("taitranhuu08@gmail.com", "123456");
+		List<User> a = dao.getSearchList("a");
 		System.out.println(a);
 	}
 

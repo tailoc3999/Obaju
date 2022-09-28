@@ -42,17 +42,23 @@ body {
     border:1px solid #f3f3f3;
 }
 h2 {
-    color: #f00;
+    font-weight: bold;
 }
 h4 {
     padding-top:10px;
 }
+tr:nth-child(even) {background-color: #d3eeef;}
+tr:nth-child(odd) {background-color: #d3eeef;}
+
 .square-btn-adjust {
     border: 0px solid transparent; 
    -webkit-border-radius: 0px;
 -moz-border-radius: 0px;
 border-radius: 0px;
 
+}
+select{
+	border-radius: 15px;
 }
 p {
     font-size:16px;
@@ -84,6 +90,10 @@ font-size: 40px;
 }
 .text-box p{
     margin: 0 0 3px;
+}
+.img-container{
+	 float: left; 
+	 padding: 5px;
 }
 .main-text {
     font-size: 25px;
